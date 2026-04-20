@@ -25,45 +25,57 @@ Strategy and know-how (Hebrew terms, URL patterns, Playwright fallback, sourcing
 
 Store metadata is read live from [`danielrosehill/Israel-Online-Stores`](https://github.com/danielrosehill/Israel-Online-Stores) (`stores.json`) — 800+ Israeli retailers with tier, delivery, Eilat-door, and Zap-profile metadata. User-added stores overlay this list from `~/.claude/plugins-data/israel-shopping/user-stores.json` and survive plugin updates.
 
-## Integrations & credits
+# Sources
 
-None are bundled yet — see [`INTEGRATIONS.md`](INTEGRATIONS.md) for status. This section credits the upstream projects considered as roadmap dependencies.
+None are bundled yet — see [`INTEGRATIONS.md`](INTEGRATIONS.md) for status. These tables credit the upstream projects considered as roadmap dependencies.
 
-### Domestic Israeli retailers & price comparison
+## Consumer rights / legal
 
-- [`danielrosehill/Israeli-Tech-Shopping-MCP`](https://github.com/danielrosehill/Israeli-Tech-Shopping-MCP) — own project: browser-automation comparison across IL tech retailers.
-- [`guymon92/ksp-mcp`](https://github.com/guymon92/ksp-mcp) — KSP.co.il MCP.
-- [`Simtob-Eran/mcp-israeli-price-comparison`](https://github.com/Simtob-Eran/mcp-israeli-price-comparison) — generic IL price-comparison MCP.
-- [`TalKleinBgu/Zap`](https://github.com/TalKleinBgu/Zap) — Zap.co.il product dedup / normalization pipeline.
+| Project | Description |
+| --- | --- |
+| [`Ansvar-Systems/israel-law-mcp`](https://github.com/Ansvar-Systems/israel-law-mcp) | Hosted MCP exposing Israeli statutes; check Consumer Protection Law coverage. |
 
-### International / cross-border
+## Currency / FX
 
-- [`justinritchie/aliexpress-mcp-server`](https://github.com/justinritchie/aliexpress-mcp-server) — AliExpress MCP for cross-border lookups.
-- [`rootsbymenda/iherbchecker`](https://github.com/rootsbymenda/iherbchecker) — iHerb availability/price check.
-- Amazon — **TODO**, no candidate yet that handles ships-to-IL eligibility.
-- Newegg — **TODO**, no candidate yet.
+| Project | Description |
+| --- | --- |
+| **TODO** | No candidate yet. Needs a mid-market-rate FX MCP (exchangerate.host, Frankfurter, open.er-api.com) for reproducible cross-border comparisons. |
 
-### Grocery
+## Domestic retailers & price comparison
 
-- [`matipojo/shufersal-mcp`](https://github.com/matipojo/shufersal-mcp) — Shufersal MCP.
-- [`aloncarmel/supermeskill`](https://github.com/aloncarmel/supermeskill) — SuperMe skill.
-- [`OpenIsraeliSupermarkets/israeli-supermarket-scarpers`](https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers) — Python scraper library (Shufersal, Rami Levy, Victory, etc.).
-- [`danielJL-altius/israelgrocerymcp`](https://github.com/danielJL-altius/israelgrocerymcp) — alt grocery MCP.
-- [`asafr93-rosa/shopping-list-il`](https://github.com/asafr93-rosa/shopping-list-il) — shopping-list tool.
+| Project | Description |
+| --- | --- |
+| [`danielrosehill/Israeli-Tech-Shopping-MCP`](https://github.com/danielrosehill/Israeli-Tech-Shopping-MCP) | Own project: browser-automation comparison across IL tech retailers. |
+| [`guymon92/ksp-mcp`](https://github.com/guymon92/ksp-mcp) | KSP.co.il MCP. |
+| [`Simtob-Eran/mcp-israeli-price-comparison`](https://github.com/Simtob-Eran/mcp-israeli-price-comparison) | Generic IL price-comparison MCP. |
+| [`TalKleinBgu/Zap`](https://github.com/TalKleinBgu/Zap) | Zap.co.il product dedup / normalization pipeline. |
 
-### Pharmacy
+## Grocery
 
-- [`tomron/agent-skill-clalit-pharm-search`](https://github.com/tomron/agent-skill-clalit-pharm-search) — Clalit pharmacy search.
-- [`alexpolonsky/agent-skill-maccabi-pharm-search`](https://github.com/alexpolonsky/agent-skill-maccabi-pharm-search) — Maccabi pharmacy search.
-- [`skills-il/health-services`](https://github.com/skills-il/health-services) — broader health services (lift pharmacy sub-skills).
+| Project | Description |
+| --- | --- |
+| [`aloncarmel/supermeskill`](https://github.com/aloncarmel/supermeskill) | SuperMe skill. |
+| [`asafr93-rosa/shopping-list-il`](https://github.com/asafr93-rosa/shopping-list-il) | Shopping-list tool. |
+| [`danielJL-altius/israelgrocerymcp`](https://github.com/danielJL-altius/israelgrocerymcp) | Alt grocery MCP. |
+| [`matipojo/shufersal-mcp`](https://github.com/matipojo/shufersal-mcp) | Shufersal MCP. |
+| [`OpenIsraeliSupermarkets/israeli-supermarket-scarpers`](https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers) | Python scraper library (Shufersal, Rami Levy, Victory, etc.). |
 
-### Consumer rights / legal (optional)
+## International / cross-border
 
-- [`Ansvar-Systems/israel-law-mcp`](https://github.com/Ansvar-Systems/israel-law-mcp) — hosted MCP exposing Israeli statutes; check Consumer Protection Law coverage.
+| Project | Description |
+| --- | --- |
+| Amazon | **TODO** — no candidate yet that handles ships-to-IL eligibility. |
+| [`justinritchie/aliexpress-mcp-server`](https://github.com/justinritchie/aliexpress-mcp-server) | AliExpress MCP for cross-border lookups. |
+| Newegg | **TODO** — no candidate yet. |
+| [`rootsbymenda/iherbchecker`](https://github.com/rootsbymenda/iherbchecker) | iHerb availability/price check. |
 
-### Currency / FX
+## Pharmacy
 
-- **TODO** — no candidate yet. Needs a mid-market-rate FX MCP (exchangerate.host, Frankfurter, open.er-api.com) for reproducible cross-border comparisons.
+| Project | Description |
+| --- | --- |
+| [`alexpolonsky/agent-skill-maccabi-pharm-search`](https://github.com/alexpolonsky/agent-skill-maccabi-pharm-search) | Maccabi pharmacy search. |
+| [`skills-il/health-services`](https://github.com/skills-il/health-services) | Broader health services (lift pharmacy sub-skills). |
+| [`tomron/agent-skill-clalit-pharm-search`](https://github.com/tomron/agent-skill-clalit-pharm-search) | Clalit pharmacy search. |
 
 ## Installation
 
