@@ -1,0 +1,12 @@
+{
+  "name": "israel-skills",
+  "version": "1.0.0",
+  "description": "Israel-specific Claude Code agent skills — Hebrew, Israeli services, local utilities.",
+  "author": {
+    "name": "Daniel Rosehill",
+    "url": "https://github.com/danielrosehill"
+  },
+  "repository": "https://github.com/danielrosehill/Israel-Skills-Plugin",
+  "license": "MIT",
+  "keywords": ["israel", "hebrew", "localization", "skills"]
+}
