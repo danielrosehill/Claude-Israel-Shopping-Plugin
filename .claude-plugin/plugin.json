@@ -1,7 +1,7 @@
 {
   "name": "israel-shopping",
-  "version": "1.1.0",
-  "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS), Zap price comparison, Hebrew term resolution, ILS conversion, and RRP/market checks.",
+  "version": "1.2.0",
+  "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS), Zap price comparison, Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, and brand identification.",
   "author": {
     "name": "Daniel Rosehill",
     "url": "https://github.com/danielrosehill"
