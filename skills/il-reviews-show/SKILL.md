@@ -1,6 +1,6 @@
 ---
 name: il-reviews-show
-description: Use when the user wants to see only the reviews left by Israeli buyers (`reviews from IL`) on an AliExpress product page — filtering out the global review pool and surfacing what people who actually shipped to Israel said about the item, including the variant/SKU they bought, star rating, photos, review text, and date. Drives the AliExpress product page (`/item/<id>.html`) reviews section via Playwright, clicks the IL country-flag chip in the review-filter strip (validated selector — `.country-flag-y2023.IL`), expands "View more" if present, and extracts the per-review fields. Trigger phrases — "show israeli reviews", "what do israelis say about X", "il reviews aliexpress", "filter aliexpress reviews to israel", "reviews from israel for this listing".
+description: Use when the user wants to see only the reviews left by Israeli buyers (`reviews from IL`) on an AliExpress product page — filtering out the global review pool and surfacing what people who actually shipped to Israel said about the item, including the variant/SKU they bought, star rating, photos, review text, and date. Drives the AliExpress product page (`/item/<id>.html`) reviews section via Playwright, clicks the IL country-flag chip in the review-filter strip (validated version-agnostic selector — `[class*="country-flag-"].IL`), expands "View more" if present, and extracts the per-review fields. Trigger phrases — "show israeli reviews", "what do israelis say about X", "il reviews aliexpress", "filter aliexpress reviews to israel", "reviews from israel for this listing".
 ---
 
 # Show AliExpress Reviews from Israel
@@ -28,19 +28,21 @@ Site must be in IL/Hebrew/ILS (see `search-aliexpress` skill for the cookie hand
 
 ## Locating the IL filter chip
 
-The review-filter strip lives below the reviews header. Each chip is a `<div>` whose class starts with `filter--filterItem--`. The Israel chip carries a child `<span class="country-flag-y2023 IL">`. Validated in `research/ui-selectors/product-page-review-filters.md`.
+The review-filter strip lives below the reviews header. Each chip is a `<div>` whose class starts with `filter--filterItem--`. The Israel chip carries a child `<span>` whose class list contains *some* `country-flag-*` versioned class **plus** the bare ISO-2 `IL`. As of capture date the versioned class is `country-flag-y2023`, but the `-y2023` suffix telegraphs that AliExpress versions this sprite — anchor on the prefix, not the year. Validated in `research/ui-selectors/product-page-review-filters.md`.
 
-**Stable selector** (anchor on the flag class, not the hashed wrapper):
+**Robust selector** — version-agnostic, won't break when AliExpress rolls `country-flag-y2024` / `country-flag-v2` / etc.:
 
 ```js
-const ilChip = document.querySelector('.country-flag-y2023.IL')
+const ilChip = document.querySelector('[class*="country-flag-"].IL')
                   ?.closest('[class*="filter--filterItem--"]');
 ```
+
+Do **not** anchor on the literal `country-flag-y2023` — it will break on the next sprite roll. The `[class*="country-flag-"]` substring + the `IL` ISO class together are the stable pair: any `country-flag-*` class with the `IL` co-class.
 
 ### Pre-flight checks
 
 1. **Reviews section exists**: `[class*="title--wrap--"]` is present. If not, the listing has no reviews at all — report and stop.
-2. **IL chip exists**: `.country-flag-y2023.IL` is in the DOM. If absent, **no reviews from Israel exist for this product** — report `0 IL reviews` and stop. Do not invent any.
+2. **IL chip exists**: `[class*="country-flag-"].IL` is in the DOM. If absent, **no reviews from Israel exist for this product** — report `0 IL reviews` and stop. Do not invent any.
 3. **IL chip is not invalid**: the wrapper does **not** carry `[class*="filter--invalid--"]`. (An invalid chip would render with `(0)` and be non-clickable — but in practice if the count is 0 the chip won't appear at all on most builds.)
 4. **Read the IL count** from the chip text, e.g. `(1)`:
 
