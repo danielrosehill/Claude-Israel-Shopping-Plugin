@@ -1,12 +1,23 @@
 {
   "name": "israel-shopping",
-  "version": "1.4.0",
-  "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS), Zap price comparison, Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, brand identification, and AliExpress IL-context tooling: search (ILS/Hebrew, IL reviews, free-shipping, combo exclusion, local-vs-import compare), per-listing landed-cost fetcher with live FX + Israeli VAT bands (no-auth scraper), and authenticated Affiliate API path (stub).",
+  "version": "1.5.0",
+  "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS) with per-branch stock checks for KSP and Ivory, Zap price comparison, Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, brand identification, and AliExpress IL-context tooling: search (ILS/Hebrew, IL reviews, free-shipping, combo exclusion, local-vs-import compare), per-listing landed-cost fetcher with live FX + Israeli VAT bands (no-auth scraper), and authenticated Affiliate API path (stub).",
   "author": {
     "name": "Daniel Rosehill",
     "url": "https://github.com/danielrosehill"
   },
   "repository": "https://github.com/danielrosehill/Claude-Israel-Shopping-Plugin",
   "license": "MIT",
-  "keywords": ["israel", "shopping", "retail", "hebrew", "ecommerce", "zap", "ksp", "ivory"]
+  "keywords": [
+    "israel",
+    "shopping",
+    "retail",
+    "hebrew",
+    "ecommerce",
+    "zap",
+    "ksp",
+    "ivory",
+    "stock",
+    "branch"
+  ]
 }

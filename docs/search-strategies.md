@@ -99,6 +99,22 @@ If all three fail for a retailer, record "no results / blocked" and continue —
 
 KSP lists two prices: regular and Eilat (tax-exempt). Always quote the **regular (higher)** price unless the user explicitly asked about Eilat pickup. If both appear, show the regular price in the table and note the Eilat price in a comment.
 
+### Per-branch stock: KSP and Ivory endpoints
+
+Used by the `ksp-branch-stock` and `ivory-branch-stock` skills. Reverse-engineered from each site's own "stock in branches" popup on 2026-10-26; neither is a documented API.
+
+| Retailer | Search | Stock by branch | Access |
+|---|---|---|---|
+| KSP | `GET https://ksp.co.il/m_action/api/category/?search=<q>` → `result.items[]` with `uin` (URL id), `uinsql` (catalogue number, מק"ט), `name`, `price`, `eilatPrice`, `pickupDeliveryBranches[]` | `GET https://ksp.co.il/m_action/api/mlay/<uinsql>` → `result.stores{<key>: {id, name, region, qnt, isLastItem}}`, 75 branches | Plain HTTP passes only with `Sec-Fetch-Site: same-origin` + `Sec-Fetch-Mode: cors` and a current Chrome UA; without them, 403. Search and `/item/<uin>` start returning 403 after ~100 rapid calls (Cloudflare challenge); `mlay` kept answering. Fallback: `fetch()` from inside a ksp.co.il page in a real browser. |
+| Ivory | `GET https://www.ivory.co.il/catalog.php?act=cat&q=<q>` (HTML; cards split on `catalogVertical_item`, id in `data-product-id`, price in `מחיר רגיל: N`) | `GET https://www.ivory.co.il/catalog-items/ws/check_balance/<id>` → `{Status, Data[{branch_code, branchName, address, isAvailable, notAvailable}]}`, 45 branches incl. warehouse `690` and external stock `19` | Plain HTTP, no special headers. |
+
+Traps:
+
+- **KSP `mlay` takes `uinsql`, not the URL id.** Passing the URL id (e.g. 410052 instead of 372624) returns a well-formed response with every branch at `qnt: 0`. That looks like "sold out everywhere" and is wrong. `/m_action/api/item/<uin>` gives the `uinsql`.
+- **KSP `qnt` is a 0/1 flag, not a unit count.** `isLastItem: true` marks the last unit. `pickupDeliveryBranches` in search results lists exactly the branches with `qnt > 0` (checked on 10 items), so search alone answers in/out-of-stock.
+- **Ivory `notAvailable: 1`** renders as the orange "i" (orderable to the branch) or grey cross; only `isAvailable: 1` (green tick) means on the shelf. Checked against the popup for product 160813.
+- Branch tables: `skills/ksp-branch-stock/references/ksp-branches.md`, `skills/ivory-branch-stock/references/ivory-branches.md`.
+
 ### Fallback when a retailer returns nothing
 
 1. Retry with a Hebrew synonym from the term-resolution list.

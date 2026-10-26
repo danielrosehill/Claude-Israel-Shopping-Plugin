@@ -19,6 +19,15 @@ Israeli shopping workflows for Claude Code — tech retailers, Zap price compari
 - `/freier-check` — playful "are you a freier" verdict given an IL price and international RRP.
 - `/add-store` — append a vendor to the user's persistent store overlay (survives plugin updates).
 
+## Skills: branch stock
+
+- `ksp-branch-stock` — is it in stock at a given KSP branch? Search, URL, item id or מק"ט in; price, in-stock and last-unit flags per branch out. Stdlib Python, with a browser fallback for when KSP's bot filter kicks in.
+- `ivory-branch-stock` — the same for Ivory, from the data behind its "הצג זמינות מלאי בסניפים" popup.
+
+Both default to your home branches from `<plugin-data-dir>/home-branches.json`, e.g. `{"ksp": ["57"], "ivory": ["24"]}`. Endpoint notes and traps: [`docs/search-strategies.md`](docs/search-strategies.md) § Per-branch stock.
+
+AliExpress skills (`search-aliexpress`, `fetch-listing`, `compare-to-local` and others) live under [`skills/`](skills/).
+
 Strategy and know-how (Hebrew terms, URL patterns, Playwright fallback, sourcing waterfall, store-merge convention) live in [`docs/search-strategies.md`](docs/search-strategies.md). The commands reference it rather than restating.
 
 ## Data

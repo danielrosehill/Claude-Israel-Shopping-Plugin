@@ -46,3 +46,4 @@ Backends used: Ivory=<tavily|playwright|…>, KSP=<…>, Bug=<…>, TMS=<…>
 - Quote ILS inc-VAT — never USD on these retailers.
 - Never silently substitute a similar-but-different model. If the exact SKU isn't carried, name the closest match and flag it.
 - For retailers outside this set, point the user to `/general-search` or `/search-zap`.
+- When the user wants to pick up in a store, or names a branch, run the `ksp-branch-stock` / `ivory-branch-stock` skills on the shortlisted items and add a branch column.
