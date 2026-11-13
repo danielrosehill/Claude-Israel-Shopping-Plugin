@@ -34,7 +34,7 @@ The site must render in **ILS + Hebrew** before scraping. Two cookies on `.aliex
 - `aep_usuc_f` — set subkeys `c_tp=ILS` and `b_locale=iw_IL`
 - `xman_us_f`  — set subkeys `x_locale=iw_IL` and `intl_locale=iw_IL`
 
-Both are `Secure`, `SameSite=None`, not HttpOnly, writable from JS. `region=IL` and `site=isr` are already set on Daniel's account and should not be touched.
+Both are `Secure`, `SameSite=None`, not HttpOnly, writable from JS. `region=IL` and `site=isr` are already set on the user's account and should not be touched.
 
 If the cookies are not present (fresh browser context), navigate to `https://he.aliexpress.com/` once and let the site write them, then verify `c_tp=ILS` before continuing. If currency still shows `US $` on the results page, fall back to the on-page currency picker.
 
@@ -72,7 +72,7 @@ if (el.getAttribute('aria-checked') !== 'true') el.click();
 
 ### Ship-from country (radio group)
 
-Single-select. Options on Daniel's IL account: `-1` (All) / `IL` / `TR` / `CN`.
+Single-select. Options on an IL-shipping account: `-1` (All) / `IL` / `TR` / `CN`.
 
 ```js
 document.querySelector('[aria-label="IL"]').click();   // ship from Israel

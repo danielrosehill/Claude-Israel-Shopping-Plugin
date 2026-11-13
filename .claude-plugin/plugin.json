@@ -1,6 +1,6 @@
 {
   "name": "israel-shopping",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS) with per-branch stock checks for KSP and Ivory, Zap price comparison, Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, brand identification, and AliExpress IL-context tooling: search (ILS/Hebrew, IL reviews, free-shipping, combo exclusion, local-vs-import compare), per-listing landed-cost fetcher with live FX + Israeli VAT bands (no-auth scraper), and authenticated Affiliate API path (stub).",
   "author": {
     "name": "Daniel Rosehill",

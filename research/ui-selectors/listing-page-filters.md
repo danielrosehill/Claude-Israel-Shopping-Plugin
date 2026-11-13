@@ -62,7 +62,7 @@ Each option:
 Notes:
 - Wrapper `<span class="ip_iq">` carries the `aria-checked` state — read this, not the `<input>`'s `:checked`, as the visual state is driven by ARIA.
 - The `id="IL"` etc. are **not unique to a checkbox semantic** — they're the country code, set as the DOM id. Any future `getElementById('IL')` collision is on AliExpress.
-- Country list on this page is `IL / TR / CN` only. Daniel's account is set to ship-to-IL (`region=IL` in `aep_usuc_f`), which likely shapes which "ship from" countries are offered. Other accounts may see additional codes (e.g. `US`, `RU`, `ES`).
+- Country list on this page is `IL / TR / CN` only. The user's account is set to ship-to-IL (`region=IL` in `aep_usuc_f`), which likely shapes which "ship from" countries are offered. Other accounts may see additional codes (e.g. `US`, `RU`, `ES`).
 - The flag span uses `css_flag_refine css_<lowercase-iso>` (`css_il`, `css_tr`, `css_cn`) — useful as a secondary anchor.
 
 To select Israel:
