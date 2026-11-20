@@ -2,16 +2,16 @@
 
 Agent-facing reference for the substantive know-how behind the plugin's search commands. The commands (`/tech-product-search`, `/general-search`, `/search-zap`, etc.) point here rather than restating the strategy. Read the section relevant to the task at hand.
 
-## Store-metadata merge convention
+## Store roster (Israel-Online-Stores) and the user overlay
 
-All commands that consume the Israeli store list must **merge** two sources:
+The roster of Israeli online stores is the public dataset `danielrosehill/Israel-Online-Stores`, refreshed from Zap's store directory on 2026-11-20: 5,590 stores, each with Zap siteid and profile URL, Hebrew description, city, and `categories` (80% tagged: Zap category facets, else Hebrew keywords in the description).
 
-1. **Upstream canonical list** — `https://raw.githubusercontent.com/danielrosehill/Israel-Online-Stores/main/stores.json` (live, 800+ entries). Read this first.
-2. **User overlay** — `<plugin-data-dir>/user-stores.json` (optional). The plugin data directory resolves as `$CLAUDE_USER_DATA/israel-shopping/` if `CLAUDE_USER_DATA` is set; otherwise `$XDG_DATA_HOME/claude-plugins/israel-shopping/` if `XDG_DATA_HOME` is set; otherwise `~/.local/share/claude-plugins/israel-shopping/`. See the canonical convention in the `meta-tools:plugin-data-storage` skill. If present, merge/append on top of the upstream list. Dedup by canonical URL / domain — user entries win on conflict.
-
-Do not write user additions back into the plugin install directory — those get clobbered on plugin update. Only `<plugin-data-dir>/user-stores.json` persists across updates.
-
-Schema matches the upstream `stores.json` shape (name, url, categories[], is_tech, description, delivery, eilat_door, zap_profile, etc. — read a live entry to confirm the current shape before writing).
+- **Query it with `scripts/stores.py`** (fetches `stores-index.json`, caches 24 h, merges the overlay):
+  `--category <tag>` (specialists first), `--city <Hebrew city>`, `--find <name/domain/text>`, `--categories` (vocabulary with counts).
+- **User overlay:** `<plugin-data-dir>/user-stores.json`, same slim shape as `stores-index.json` (`name, website, domain, categories[], is_tech, city_he, description_he, zap_siteid`); user entries win on the same domain. `<plugin-data-dir>` = `$CLAUDE_USER_DATA/israel-shopping/`, else `$XDG_DATA_HOME/claude-plugins/israel-shopping/`, else `~/.local/share/claude-plugins/israel-shopping/`. Never write into the plugin install directory.
+- The full nested record (`stores.json`, 15 MB) and its schema are in that repo's `DATA_DICTIONARY.md`; agents normally need only the index.
+- Tag vocabulary: computers, mobile, peripherals, appliances, photography, audio, pro_audio, musical_instruments, tv_av, gaming, office, lighting, tactical, camping_outdoor, power_battery, smart_home, security, tools, spare_parts, accessories, home_garden, furniture, health_beauty, kids_baby, auto, pets, sport, fashion, gifts, food, books_media, other.
+- Not every good vendor is on Zap (KZPro, for one): `data/trusted-vendors.json` covers those.
 
 ---
 
@@ -229,26 +229,13 @@ Group by domain, surface the top 3–5 retailers. Flag any retailer not already 
 
 ## Category-dispatched search
 
-When the query lies outside the mainstream tier-1 and tier-2 chains — e.g. tactical gear, specialist audio, photography accessories — filter the merged store list by category and search the matching stores directly.
+For specialists outside the trusted list: `python3 scripts/stores.py --category <tag> [--city <city>]`, pick up to 8 (results are ranked specialists first; skip generalists with 10+ tags unless nothing else fits), then search each store:
 
-### Vocabulary
+1. URL-pattern probes with curl: `/?s={q}` (WordPress), `/search?q={q}`, `/catalogsearch/result/?q={q}` (Magento), `/AllResults?bskeyword={q}`.
+2. Real browser: homepage search form (`input[type=search]`, `input[name=q]`, `input[name=s]`, `#search`, `#searchbox`).
+3. Web search / Exa: `site:{domain} <hebrew query>`.
 
-`computers`, `mobile`, `peripherals`, `appliances`, `photography`, `audio`, `tv_av`, `gaming`, `office`, `lighting`, `tactical`, `power_battery`, `smart_home`, `security`, `tools`, `spare_parts`, `accessories`.
-
-### Workflow
-
-1. Map the user's request to one or more categories. Examples: "headlamps" → `lighting` + `tactical`; "DSLR bag" → `photography` + `accessories`; "UPS" → `power_battery`.
-2. Filter the merged store list: `is_tech != false` AND any category in `store.categories[]` matches.
-3. Pick up to 8 stores. Prioritise `is_tech: true` over `null`, then stores whose description mentions the specific product type, then stores with multiple matching categories.
-4. Resolve Hebrew terms.
-5. Search each store. Try in order:
-   - Real browser: homepage, locate search form (`input[type=search]`, `input[name=q]`, `input[name=s]`, `#search`, `#qSearch`), submit Hebrew query.
-   - URL-pattern probes: `/?s={q}` (WordPress), `/search?q={q}`, `/catalogsearch/result/?q={q}` (Magento).
-   - Web search / Exa: `site:{domain} <hebrew query>`.
-6. Try alternate Hebrew variants if primary returns nothing.
-7. Rank low-to-high. Cap at 3 results per store.
-
-Only navigate to stores where `is_tech` is `true` or `null`. Never `false`.
+Try Hebrew variants if the first query misses. Rank low-to-high, cap 3 results per store. A store whose search URL you verify is a candidate for the user's trusted list.
 
 ---
 

@@ -19,11 +19,11 @@ curl / WebFetch with a desktop Chrome UA from an Israeli IP (Zap rejects headles
 
 ## Workflow
 
-1. **Load the merged store list** — check if the retailer already has a `zap_profile` URL recorded (upstream `stores.json` + `<plugin-data-dir>/user-stores.json (resolved via $CLAUDE_USER_DATA — see docs/search-strategies.md)`; see `docs/search-strategies.md`).
-2. **If known,** navigate directly to the profile URL (`https://www.zap.co.il/shop.aspx?sog=shop-<id>`).
+1. **Look the retailer up in the roster:** `python3 scripts/stores.py --find "<name or domain>"` returns its `zap_url` when it is on Zap (5,584 stores are).
+2. **If known,** navigate directly to the profile URL (`https://www.zap.co.il/clientcard.aspx?siteid=<id>`).
 3. **If unknown,** search Zap for the retailer:
    - Navigate `https://www.zap.co.il/` and use the shop search, OR
-   - Google `site:zap.co.il "<retailer name>"` and look for a `shop.aspx?sog=shop-<id>` URL.
+   - Google `site:zap.co.il "<retailer name>"` and look for a `clientcard.aspx?siteid=<id>` URL.
 4. **On the profile page, extract:**
    - Seller rating (usually out of 5 or as a percentage)
    - Review count

@@ -48,7 +48,7 @@ Strategy and know-how (Hebrew terms, verified URL patterns and routes per retail
 
 ## Data
 
-Store metadata is read live from [`danielrosehill/Israel-Online-Stores`](https://github.com/danielrosehill/Israel-Online-Stores) (`stores.json`) — 800+ Israeli retailers with tier, delivery, Eilat-door, and Zap-profile metadata. User-added stores overlay this list from `<plugin-data-dir>/user-stores.json` (`$CLAUDE_USER_DATA/israel-shopping/user-stores.json`, or the XDG/`~/.local/share/claude-plugins/israel-shopping/` fallback — see the `meta-tools:plugin-data-storage` canonical skill) and survive plugin updates.
+Store roster: [`danielrosehill/Israel-Online-Stores`](https://github.com/danielrosehill/Israel-Online-Stores), 5,590 Israeli stores from Zap's store directory (refreshed 2026-11-20) with Zap profile links and product categories (80% tagged). Query it with `python3 scripts/stores.py --category <tag>` / `--find <name>`. Your own additions go in `<plugin-data-dir>/user-stores.json` (`/add-store`) and survive plugin updates.
 
 # Sources
 

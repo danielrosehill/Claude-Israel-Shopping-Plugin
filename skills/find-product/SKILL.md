@@ -44,7 +44,7 @@ Report vendors the user trusts even when Zap already lists them: their own site 
 
 - Web search `"<brand> <model>" site:co.il` and `"<brand> <model>" מחיר`; drop news, blogs and review sites.
 - When web search is thin or blocked, escalate to Exa (`exa__web_search_exa`, describe the page: "Israeli online store product page selling <model>").
-- For specialists, filter the Israel-Online-Stores roster by category (`stores-index.json`, see strategies doc § Store roster) and search the top matches.
+- For specialists, `python3 scripts/stores.py --category <tag>` (5,590-store roster from Zap, specialists ranked first; see strategies doc § Store roster) and search the top matches.
 - Any retailer found here that is not in the roster or the trusted list: mention it as a candidate for `/add-store`.
 
 ### D. Import options (run unless the user said local only)

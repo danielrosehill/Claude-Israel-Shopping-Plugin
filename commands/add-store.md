@@ -53,10 +53,10 @@ and use the same field names and types.
 
 1. Parse the URL → canonical domain.
 2. Ensure `<plugin-data-dir>/` exists; create if not. Initialise `user-stores.json` with `[]` if missing.
-3. Load `user-stores.json`. Also load the upstream `stores.json` to check for duplicates across the merged set.
+3. Check for duplicates across the merged set: `python3 scripts/stores.py --find <domain>`.
 4. If the domain already exists in either list, report it and exit without changes.
 5. Derive `categories[]` from the `<what they sell>` free-text description using the controlled vocabulary (see strategies doc).
-6. Build the entry matching the upstream schema (`name`, `url`, `categories`, `is_tech`, `description`, plus any available metadata like `delivery`, `eilat_door`, `zap_profile` if obvious from the site — leave null otherwise).
+6. Build the entry in the slim roster shape: `{"name", "website", "domain", "categories": [], "is_tech", "city_he", "description_he", "zap_siteid"}` (siteid from the store's Zap profile if it has one, else null). If the user wants it searched every time for a category, also add it to `<plugin-data-dir>/trusted-vendors.json` with its verified search URL.
 7. Append to `user-stores.json` and write back, preserving JSON formatting (2-space indent).
 
 ## Flags
