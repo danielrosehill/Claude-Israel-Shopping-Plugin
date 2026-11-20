@@ -19,7 +19,7 @@ Markup (2026-11-20):
              data-product-price, data-shipping-price, data-shipping-days, data-site-rate, data-pid;
              every vendor row is '<div class="compare-item-row ...' with data-site-name,
              data-site-id, data-product-price, data-ship-price/data-delivery-price,
-             data-delivery-time, data-official-importer, data-warranty-company/-months.
+             data-delivery-time (max business days, shown as 'עד N ימי עסקים'), data-marketing-tags ('zap choice'), data-official-importer, data-warranty-company/-months.
 Zap prices can lag the vendor by a day: confirm on the vendor page before quoting a winner.
 """
 import html
@@ -103,7 +103,8 @@ def model(ref):
             "price_ils": item,
             "shipping_ils": ship,
             "total_ils": (item or 0) + (ship or 0) if item is not None else None,
-            "shipping_days": a.get("data-shipping-days") or a.get("data-delivery-time"),
+            "delivery_business_days_max": a.get("data-shipping-days") or a.get("data-delivery-time"),
+            "zap_choice": "zap choice" in (a.get("data-marketing-tags") or ""),
             "vendor_rating": a.get("data-site-rate"),
             "official_importer": a.get("data-official-importer"),
             "parallel_importer": a.get("data-parallel-importer"),

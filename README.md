@@ -16,6 +16,8 @@ The `find-product` skill is the default entry point for "find me X" / "where can
 - **Import options** — Amazon delivered to Israel and AliExpress, with landed cost against the local best price.
 - **Branch stock** at KSP and Ivory when you want to pick it up.
 
+Every result row shows **where it ships from, how long delivery takes, the delivery options** (courier, pickup point, store pickup, Israel Post) and their cost. Prices default to **₪ including VAT**; ask for **dollars** and/or **excluding VAT** (business buyers who reclaim VAT) and the whole table switches basis, with the exchange rate and date stated. A standing default can go in `<plugin-data-dir>/preferences.json`, e.g. `{"currency": "USD", "vat": "ex", "buyer": "business"}`.
+
 ## Commands (slash)
 
 - `/tech-product-search` — search tier-1 IL tech retailers (Ivory, KSP, Bug, TMS) with Hebrew-term resolution; bundled KSP/Ivory scripts, curl, and a real browser only for bot-walled sites.
