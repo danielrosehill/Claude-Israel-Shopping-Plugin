@@ -38,7 +38,11 @@ Every result row shows **where it ships from, how long delivery takes, the deliv
 
 Both default to your home branches from `<plugin-data-dir>/home-branches.json`, e.g. `{"ksp": ["57"], "ivory": ["24"]}`. Endpoint notes and traps: [`docs/search-strategies.md`](docs/search-strategies.md) § Per-branch stock.
 
-AliExpress skills (`search-aliexpress`, `fetch-listing`, `compare-to-local` and others) live under [`skills/`](skills/).
+AliExpress lives in the companion plugin [`aliexpress-israel-skills`](https://github.com/danielrosehill/Aliexpress-Israel-Skills) (search, true prices, landed cost, $75 de-minimis, Israeli reviews, cart). This plugin keeps `compare-to-local` (is an AliExpress item sold in Israel, and for how much) and calls the companion from `find-product`.
+
+## History
+
+- 2026-11-20: `find-product`, trusted vendors and `scripts/zap.py` added. The AliExpress skills (`search-aliexpress`, `fetch-listing`, `fetch-listing-api`, `free-shipping-only`, `il-reviews-show`, `exclude-combo-deals`) and the `research/` notes moved to `aliexpress-israel-skills`.
 
 Strategy and know-how (Hebrew terms, verified URL patterns and routes per retailer, trusted vendors, Amazon-to-Israel, sourcing waterfall, store roster) live in [`docs/search-strategies.md`](docs/search-strategies.md). The commands reference it rather than restating.
 
