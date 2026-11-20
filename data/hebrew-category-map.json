@@ -1,0 +1,141 @@
+{
+  "_meta": {
+    "purpose": "Canonical Hebrew retail terms for English product categories. Used by all search-* skills to translate the category noun before querying Israeli retailers.",
+    "rules": [
+      "Brand names + model numbers always stay Latin (e.g. 'Anker Prime', 'A2343', 'Eneloop AA').",
+      "Translate ONLY the generic category noun.",
+      "A category may have multiple accepted Hebrew terms — list them all under 'he_terms', most-common first.",
+      "If a search returns nothing, try each he_term in order before giving up.",
+      "If a category isn't here, run the discover-hebrew-term skill and append the result back to this file."
+    ],
+    "last_updated": "2026-04-16"
+  },
+  "categories": {
+    "desktop_charging_station": {
+      "en_aliases": ["desktop charging station", "charging tower", "desktop charger", "GaN desktop charger", "multi-port USB-C charger", "charging hub", "PD charging station"],
+      "he_terms": ["עמדת טעינה", "עמדת טעינה עוצמתית", "מטען שולחני", "תחנת טעינה", "מטען רב-ערוצי", "מטען מרובה יציאות"],
+      "exclude_he": ["מטען אלחוטי", "סוללה ניידת", "מתאם נסיעות"],
+      "notes": "KSP uses 'עמדת טעינה עוצמתית' for the 200W+ Anker Primes. 'תחנת טעינה' is the literal translation but rarer in retail."
+    },
+    "wall_charger": {
+      "en_aliases": ["wall charger", "USB wall charger", "GaN wall charger", "PD wall charger"],
+      "he_terms": ["מטען קיר", "ראש מטען", "מטען USB"],
+      "notes": "'ראש מטען' literally means 'charger head' — very common."
+    },
+    "power_bank": {
+      "en_aliases": ["power bank", "portable battery", "external battery"],
+      "he_terms": ["סוללה ניידת", "מטען נייד", "פאוור בנק"],
+      "notes": "'פאוור בנק' is a Hebrew transliteration — used by some retailers."
+    },
+    "rechargeable_batteries": {
+      "en_aliases": ["rechargeable batteries", "AA rechargeable", "AAA rechargeable", "Eneloop"],
+      "he_terms": ["סוללות נטענות", "סוללות נטענות AA", "סוללות נטענות AAA"],
+      "notes": "Add the size suffix (AA / AAA / 18650) for sharper results."
+    },
+    "battery_charger": {
+      "en_aliases": ["battery charger", "AA charger", "Eneloop charger", "smart charger"],
+      "he_terms": ["מטען סוללות", "מטען לסוללות נטענות"],
+      "notes": ""
+    },
+    "headlamp": {
+      "en_aliases": ["headlamp", "head torch", "head light"],
+      "he_terms": ["פנס ראש", "פנס מצח"],
+      "notes": "Both terms widely used. 'פנס ראש' is more common in tactical/Nitecore listings."
+    },
+    "flashlight": {
+      "en_aliases": ["flashlight", "torch", "tactical flashlight", "EDC flashlight"],
+      "he_terms": ["פנס", "פנס טקטי", "פנס LED"],
+      "notes": ""
+    },
+    "ups": {
+      "en_aliases": ["UPS", "uninterruptible power supply", "battery backup"],
+      "he_terms": ["אל פסק", "מערכת אל פסק", "UPS"],
+      "notes": "'אל פסק' (literally 'never-stop') is universal. The Latin 'UPS' also works on most search boxes."
+    },
+    "surge_protector": {
+      "en_aliases": ["surge protector", "power strip", "extension lead"],
+      "he_terms": ["מפצל חשמל", "מאריך חשמל", "מגן מתח"],
+      "notes": "'מגן מתח' specifically means surge protector (with surge protection); the others are extension leads."
+    },
+    "monitor": {
+      "en_aliases": ["monitor", "display", "computer screen", "gaming monitor"],
+      "he_terms": ["מסך מחשב", "מסך"],
+      "notes": "'מסך' alone is too broad — pair with 'מחשב' or the brand."
+    },
+    "keyboard": {
+      "en_aliases": ["keyboard", "mechanical keyboard"],
+      "he_terms": ["מקלדת", "מקלדת מכנית", "מקלדת גיימינג"],
+      "notes": ""
+    },
+    "mouse": {
+      "en_aliases": ["mouse", "gaming mouse", "wireless mouse"],
+      "he_terms": ["עכבר", "עכבר גיימינג", "עכבר אלחוטי"],
+      "notes": ""
+    },
+    "headphones": {
+      "en_aliases": ["headphones", "wireless headphones", "noise-cancelling headphones"],
+      "he_terms": ["אוזניות", "אוזניות אלחוטיות", "אוזניות מבטלות רעשים"],
+      "notes": ""
+    },
+    "earbuds": {
+      "en_aliases": ["earbuds", "wireless earbuds", "true wireless"],
+      "he_terms": ["אוזניות אלחוטיות", "אוזניות בלוטות'", "אוזניות TWS"],
+      "notes": ""
+    },
+    "usb_hub": {
+      "en_aliases": ["USB hub", "USB-C hub", "data hub"],
+      "he_terms": ["מפצל USB", "מפצל USB-C", "האב USB"],
+      "notes": "Note: 'מפצל' = splitter, the standard term for a hub."
+    },
+    "docking_station": {
+      "en_aliases": ["docking station", "laptop dock", "USB-C dock"],
+      "he_terms": ["תחנת עגינה", "דוק", "דוקינג"],
+      "notes": ""
+    },
+    "ssd_external": {
+      "en_aliases": ["external SSD", "portable SSD"],
+      "he_terms": ["כונן SSD חיצוני", "SSD נייד", "כונן חיצוני"],
+      "notes": ""
+    },
+    "ssd_internal": {
+      "en_aliases": ["internal SSD", "NVMe SSD", "M.2 SSD"],
+      "he_terms": ["כונן SSD פנימי", "כונן NVMe", "כונן M.2"],
+      "notes": ""
+    },
+    "cable_usb_c": {
+      "en_aliases": ["USB-C cable", "Type-C cable"],
+      "he_terms": ["כבל USB-C", "כבל טייפ סי", "כבל Type-C"],
+      "notes": ""
+    },
+    "cable_hdmi": {
+      "en_aliases": ["HDMI cable"],
+      "he_terms": ["כבל HDMI"],
+      "notes": ""
+    },
+    "router": {
+      "en_aliases": ["router", "WiFi router", "mesh router"],
+      "he_terms": ["ראוטר", "נתב", "ראוטר WiFi"],
+      "notes": "'ראוטר' (Heb. transliteration) is more common in retail than the formal 'נתב'."
+    },
+    "smart_plug": {
+      "en_aliases": ["smart plug", "smart socket"],
+      "he_terms": ["שקע חכם", "תקע חכם"],
+      "notes": ""
+    },
+    "security_camera": {
+      "en_aliases": ["security camera", "IP camera", "smart camera"],
+      "he_terms": ["מצלמת אבטחה", "מצלמת IP", "מצלמה חכמה"],
+      "notes": ""
+    },
+    "vacuum_robot": {
+      "en_aliases": ["robot vacuum", "robotic vacuum"],
+      "he_terms": ["שואב אבק רובוטי", "רובוט שואב אבק"],
+      "notes": ""
+    },
+    "air_purifier": {
+      "en_aliases": ["air purifier"],
+      "he_terms": ["מטהר אוויר"],
+      "notes": ""
+    }
+  }
+}

@@ -32,6 +32,7 @@ Examples:
 
 ### If you don't know the Hebrew noun
 
+0. Look it up in `data/hebrew-category-map.json` (English aliases → accepted Hebrew retail terms, most common first, plus `exclude_he` terms). Try every `he_terms` entry before concluding a product isn't sold. When you derive a new term (below), add it to the map.
 1. Check the user's vocabulary — if they used a Hebrew word, use it.
 2. Otherwise translate the category noun. Common mappings:
    - mouse → `עכבר`
@@ -174,6 +175,10 @@ Each vendor row on a model page is a `div.compare-item-row` carrying `data-site-
 - Zap sometimes lists ex-VAT prices without a clear badge — verify on the vendor page.
 - Show Zap's own "Zap price" (recommendation) alongside the cheapest vendor — it reflects Zap's deal arrangements.
 
+### Brand-store fallback
+
+For brands with an official Israeli distributor (Nitecore, Anker, UGREEN, Panasonic/Eneloop, Shure via its importer), check the brand's `.co.il` site: often the full SKU range, authoritative warranty, sometimes cheaper than the chains. Zap's `official_importer` / `warranty_company` fields name the importer.
+
 ### When Zap misses
 
 If keyword search returns no model page or the vendor table is empty:
@@ -291,7 +296,9 @@ Pick the best channel per candidate based on landed cost, lead time vs spec tole
 
 ## VAT and markup verdict scale
 
-Israeli VAT is currently 18% (as of 2025+). All retail pricing should be quoted VAT-inclusive. If a listing is ex-VAT (common for Eilat, B2B quotes, some Zap rows), normalise by adding 18% before comparing.
+Israeli VAT is currently 18% (as of 2025+). All retail pricing should be quoted VAT-inclusive unless the user is a business buyer (see find-product § Price basis). If a listing is ex-VAT (common for Eilat, B2B quotes, some Zap rows), normalise by adding 18% before comparing.
+
+Ex-VAT markers to look for near a price: `לפני מע"מ`, `בתוספת מע"מ`, `ללא מע"מ`, `לא כולל מע"מ`, `+ מע"מ`, `ex VAT`, `excl. VAT`, `+ VAT`. KSP's lower "מחיר אילת" is ex-VAT and valid only for Eilat.
 
 ### RRP-vs-IL verdict scale
 

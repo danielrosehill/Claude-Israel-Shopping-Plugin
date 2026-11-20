@@ -66,6 +66,76 @@
       "search_url": "https://www.kley-zemer.co.il/AllResults?bskeyword={q}",
       "route": "curl",
       "notes": "Musical instruments and pro audio chain; same platform as KZPro. Short queries. span.saleprice is sometimes empty in served HTML: confirm the price on the product page or in a browser."
+    },
+    "idigital": {
+      "name": "iDigital",
+      "domain": "idigital.co.il",
+      "search_url": "https://www.idigital.co.il/search?q={q}",
+      "route": "curl",
+      "notes": "Apple premium reseller."
+    },
+    "homecenter": {
+      "name": "Home Center",
+      "domain": "homecenter.co.il",
+      "search_url": "https://www.homecenter.co.il/search?q={q}",
+      "route": "curl",
+      "notes": "Home improvement, tools, appliances. Page ~3 MB: grep."
+    },
+    "alpesek": {
+      "name": "Alpesek",
+      "domain": "alpesek.co.il",
+      "search_url": "https://www.alpesek.co.il/?s={q}",
+      "route": "curl",
+      "notes": "UPS and power protection (WordPress)."
+    },
+    "sollan": {
+      "name": "Sollan",
+      "domain": "sollan.co.il",
+      "search_url": "https://www.sollan.co.il/?s={q}",
+      "route": "curl",
+      "notes": "Batteries and chargers (WordPress)."
+    },
+    "payngo": {
+      "name": "Machsanei Hashmal (Pay&Go)",
+      "domain": "payngo.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Appliances and electronics. /search?q= returns 403 to curl (unverified 2026-11-20)."
+    },
+    "ace": {
+      "name": "Ace",
+      "domain": "ace.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Hardware, tools, garden. /search?q= is 404; Magento, prices load by AJAX (unverified 2026-11-20)."
+    },
+    "officedepot": {
+      "name": "Office Depot",
+      "domain": "officedepot.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Office supplies and tech accessories. /search?q= is 404 (unverified 2026-11-20)."
+    },
+    "audioline": {
+      "name": "Audioline",
+      "domain": "audioline.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Consumer audio. /catalogsearch/result/?q= is 404 (unverified 2026-11-20)."
+    },
+    "kravitz": {
+      "name": "Kravitz",
+      "domain": "kravitz.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Office and stationery. /catalogsearch/result/?q= is 404 (unverified 2026-11-20)."
+    },
+    "nitecore": {
+      "name": "Nitecore Israel",
+      "domain": "nitecore.co.il",
+      "search_url": null,
+      "route": "browser",
+      "notes": "Official Nitecore: flashlights, chargers, batteries. Returned Cloudflare 525 (unverified 2026-11-20)."
     }
   },
   "categories": {
@@ -103,7 +173,8 @@
       ],
       "wave2": [
         "ksp",
-        "ivory"
+        "ivory",
+        "audioline"
       ]
     },
     "musical_instruments": {
@@ -114,6 +185,72 @@
         "kzpro"
       ],
       "wave2": []
+    },
+    "apple": {
+      "label": "Apple products",
+      "wave1": [
+        "idigital",
+        "ksp",
+        "ivory"
+      ],
+      "wave2": [
+        "bug"
+      ]
+    },
+    "appliances": {
+      "label": "Home appliances",
+      "wave1": [
+        "payngo",
+        "homecenter",
+        "ksp"
+      ],
+      "wave2": [
+        "ace",
+        "ivory"
+      ]
+    },
+    "tools_home": {
+      "label": "Tools, hardware, home improvement",
+      "wave1": [
+        "homecenter",
+        "ace"
+      ],
+      "wave2": [
+        "ksp"
+      ]
+    },
+    "office": {
+      "label": "Office supplies and furniture",
+      "wave1": [
+        "officedepot",
+        "kravitz"
+      ],
+      "wave2": [
+        "ksp",
+        "ivory"
+      ]
+    },
+    "power_battery": {
+      "label": "UPS, batteries, chargers, power protection",
+      "wave1": [
+        "alpesek",
+        "sollan",
+        "ksp"
+      ],
+      "wave2": [
+        "nitecore",
+        "ivory"
+      ]
+    },
+    "lighting_flashlights": {
+      "label": "Flashlights, headlamps",
+      "wave1": [
+        "nitecore",
+        "sollan"
+      ],
+      "wave2": [
+        "ksp"
+      ]
     }
   }
 }
