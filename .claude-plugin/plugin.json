@@ -1,7 +1,7 @@
 {
   "name": "israel-shopping",
-  "version": "1.5.1",
-  "description": "Israeli shopping workflows — tech retailers (Ivory, KSP, Bug, TMS) with per-branch stock checks for KSP and Ivory, Zap price comparison, Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, brand identification, and AliExpress IL-context tooling: search (ILS/Hebrew, IL reviews, free-shipping, combo exclusion, local-vs-import compare), per-listing landed-cost fetcher with live FX + Israeli VAT bands (no-auth scraper), and authenticated Affiliate API path (stub).",
+  "version": "1.6.0",
+  "description": "Israeli shopping workflows — find-product orchestrator that runs every channel at once (Zap vendor tables, trusted vendors per category, .co.il search, Amazon-to-Israel and AliExpress landed cost, KSP/Ivory branch stock); tech retailers (Ivory, KSP, Bug, TMS, Plonter), pro-audio specialists (KZPro, Speed of Sound, Halilit, Kley Zemer), Hebrew term resolution, ILS conversion, RRP checks, PN cross-reference, brand identification, and AliExpress IL-context tooling.",
   "author": {
     "name": "Daniel Rosehill",
     "url": "https://github.com/danielrosehill"
@@ -18,6 +18,9 @@
     "ksp",
     "ivory",
     "stock",
-    "branch"
+    "branch",
+    "kzpro",
+    "halilit",
+    "price-comparison"
   ]
 }

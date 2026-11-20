@@ -23,8 +23,8 @@ Given an Israeli price for a product, decide whether it's a good deal versus the
 
 ## Backend choice
 
-- **Tavily** — default for "what's the RRP" lookups (multi-source, fast).
-- **Playwright** — when the user names a specific URL or retailer page.
+- **Web search** — default for "what's the RRP" lookups; escalate to Exa when results are thin.
+- **WebFetch / curl, then a real browser** — when the user names a specific URL or retailer page. Amazon delivered to Israel: strategies doc § Amazon.
 
 ## Workflow
 

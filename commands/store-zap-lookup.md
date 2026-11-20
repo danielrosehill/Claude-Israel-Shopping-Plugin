@@ -15,7 +15,7 @@ Resolve an Israeli retailer to its Zap seller profile and pull the rating.
 
 ## Backend
 
-Playwright (Zap has bot detection). WebFetch may work for the profile page itself once the URL is known.
+curl / WebFetch with a desktop Chrome UA from an Israeli IP (Zap rejects headless browsers). Profile URL: `https://www.zap.co.il/clientcard.aspx?siteid=<siteid>`; the siteid is in the store roster (`zap.siteid`) and in every Zap offer row.
 
 ## Workflow
 

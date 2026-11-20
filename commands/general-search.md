@@ -24,8 +24,8 @@ For most cross-retailer price comparison, try `/search-zap` first. Come here whe
 2. **Resolve Hebrew term** (preflight — see strategies doc).
 3. **Load the merged store list** — upstream `stores.json` overlaid with `<plugin-data-dir>/user-stores.json (resolved via $CLAUDE_USER_DATA — see docs/search-strategies.md)` (see strategies doc).
 4. **Pick path:**
-   - **Tier-2 majors** — search Ace, Home Center, Office Depot, Audioline via Playwright homepage form or Tavily.
-   - **Category-dispatch** — filter merged store list by matching `categories[]`; pick up to 8 stores; search each.
+   - **Tier-2 majors** — search Ace, Home Center, Office Depot, Audioline via curl of the search URL, a real browser, or `site:` web search.
+   - **Category-dispatch** — filter the store roster by `categories` (see strategies doc § Category-dispatched search); pick up to 8 stores; search each.
    - **Google IL** — patterns from strategies doc (`"brand model" site:.il`, `מחיר <hebrew>`, Google Shopping IL).
 5. **Rank low-to-high** by VAT-inclusive ILS price. Cap 5 per retailer / 3 per niche store.
 6. **Flag retailers not in the merged store list** — candidates for `/add-store`.

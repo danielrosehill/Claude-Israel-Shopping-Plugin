@@ -6,9 +6,19 @@ Israeli shopping workflows for Claude Code — tech retailers, Zap price compari
 
 > Renamed from `Israel-Skills` on 2026-04-20. The scope was always shopping; the new name reflects it. Non-shopping Israel utilities will live in a separate plugin.
 
+## Start here: `find-product`
+
+The `find-product` skill is the default entry point for "find me X" / "where can I buy X in Israel". It pins down the exact model, then runs every channel in parallel and returns one table ranked by delivered price:
+
+- **Zap** — `scripts/zap.py` pulls every vendor on a Zap model page (price, shipping, delivery days, rating, official importer, warranty) over plain HTTP.
+- **Trusted vendors per category** — [`data/trusted-vendors.json`](data/trusted-vendors.json), searched in waves. Defaults: computer parts → KSP, Ivory, TMS, then Plonter, Bug; microphones and audio → KZPro, Speed of Sound, Halilit, Kley Zemer, then KSP, Ivory. Each vendor carries its verified search URL and route. Add your own in `<plugin-data-dir>/trusted-vendors.json`.
+- **.co.il web search** for retailers neither Zap nor the trusted list covers.
+- **Import options** — Amazon delivered to Israel and AliExpress, with landed cost against the local best price.
+- **Branch stock** at KSP and Ivory when you want to pick it up.
+
 ## Commands (slash)
 
-- `/tech-product-search` — search tier-1 IL tech retailers (Ivory, KSP, Bug, TMS) with Hebrew-term resolution and a Tavily→WebFetch→Playwright fallback chain.
+- `/tech-product-search` — search tier-1 IL tech retailers (Ivory, KSP, Bug, TMS) with Hebrew-term resolution; bundled KSP/Ivory scripts, curl, and a real browser only for bot-walled sites.
 - `/general-search` — broader Israeli retail search (Ace, Home Center, Office Depot, Audioline, Google IL, Zap).
 - `/search-zap` — query zap.co.il, the canonical Israeli price-comparison aggregator.
 - `/rrp-check` — compare an Israeli price against international RRP / market pricing.
@@ -28,7 +38,7 @@ Both default to your home branches from `<plugin-data-dir>/home-branches.json`, 
 
 AliExpress skills (`search-aliexpress`, `fetch-listing`, `compare-to-local` and others) live under [`skills/`](skills/).
 
-Strategy and know-how (Hebrew terms, URL patterns, Playwright fallback, sourcing waterfall, store-merge convention) live in [`docs/search-strategies.md`](docs/search-strategies.md). The commands reference it rather than restating.
+Strategy and know-how (Hebrew terms, verified URL patterns and routes per retailer, trusted vendors, Amazon-to-Israel, sourcing waterfall, store roster) live in [`docs/search-strategies.md`](docs/search-strategies.md). The commands reference it rather than restating.
 
 ## Data
 

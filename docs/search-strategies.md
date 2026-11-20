@@ -71,29 +71,27 @@ The four mainstream tech chains. Used by `/tech-product-search`.
 
 | Retailer | Search URL pattern | Backend notes |
 |---|---|---|
-| Ivory | `https://www.ivory.co.il/catalog.php?act=cat&q=<URL-encoded Hebrew>` | Usually scrapable via Tavily / WebFetch. |
-| KSP | `https://ksp.co.il/web/cat/?search=<URL-encoded Hebrew>` | Bot-detected — Playwright required. Two prices (regular + Eilat); always quote the **regular** (higher) price unless the user specifies Eilat pickup. |
-| Bug | `https://www.bug.co.il/` (homepage search) | Bot-detected — Playwright required. URL pattern not stable; use homepage search box. |
-| TMS | `https://tms.co.il/index.php?route=product/search&search=<URL-encoded Hebrew>` | Scrapable via Tavily / WebFetch. |
+| Ivory | `https://www.ivory.co.il/catalog.php?act=cat&q=<URL-encoded Hebrew>` | curl / WebFetch, or `skills/ivory-branch-stock/scripts/ivory_stock.py "<q>" --all` (adds branch stock). |
+| KSP | `https://ksp.co.il/web/cat/?search=<URL-encoded Hebrew>` | The HTML site returns 403 to every automated route (curl, headless, residential IP). Use `skills/ksp-branch-stock/scripts/ksp_stock.py "<q>" --all`, which calls KSP's JSON API with browser Sec-Fetch headers. Two prices (regular + Eilat); always quote the **regular** (higher) price unless the user specifies Eilat pickup. |
+| Bug | `https://www.bug.co.il/search?q=<URL-encoded Hebrew>` | curl with a desktop Chrome UA works (verified 2026-11-20); page is ~1.3 MB, grep the model. |
+| TMS | `https://tms.co.il/index.php?route=product/search&search=<URL-encoded Hebrew>` | curl / WebFetch. |
+
+Verified 2026-11-20 with `מיקרופון Shure SM7B`. Trusted vendors beyond these four, with their verified routes and per-category search waves, are in `data/trusted-vendors.json` (see § Trusted vendors).
 
 **URL-encode the Hebrew query.** Example: `מחשב` → `%D7%9E%D7%97%D7%A9%D7%91`. Don't paste raw Hebrew into the URL.
 
-Treat the URL patterns as last-known-good hints, not contracts. If a documented pattern returns a homepage redirect or 404, fall back to the Playwright homepage-form flow and note it in the output.
+Treat the URL patterns as last-known-good hints, not contracts. If a documented pattern returns a homepage redirect or 404, fall back to the real-browser homepage-form flow and note it in the output.
 
 ### Backend chain (per retailer)
 
-Try in order; pick one and proceed; note the backend used in the output.
+Try in order; note the backend used in the output. Verified routes as of 2026-11-20:
 
-1. **Tavily search** (`mcp__jungle-shared__tavily__tavily_search`) with `query: "<hebrew> <brand> <model> site:<domain>"`, `search_depth: "basic"`, `max_results: 5`. Fast. Works for Ivory and TMS.
-2. **WebFetch** the retailer's search URL directly if you know the pattern (verify real results, not a homepage redirect).
-3. **Playwright fallback** (`mcp__plugin_playwright_playwright__browser_*`) when steps 1–2 return no results, or for KSP/Bug by default:
-   - `browser_navigate` to the retailer homepage.
-   - `browser_snapshot` to locate the search input.
-   - `browser_type` the Hebrew query with `submit: true`.
-   - `browser_snapshot` again, extract the top 5 product cards (title, price ILS, link, stock).
-   - `browser_close` when done.
+1. **Bundled script** where one exists (KSP, Ivory, Zap: `scripts/zap.py`).
+2. **curl / WebFetch** of the retailer's search URL with a desktop Chrome User-Agent. From this kind of setup both egress on the user's Israeli IP, which most Israeli retailers require. Check you got real results, not a homepage or a bot-challenge page (Incapsula, Cloudflare, "Request Rejected").
+3. **Real browser** (the agent browser, else Claude in Chrome, else Playwright) for sites behind a JS bot wall (Plonter: Incapsula) or with no URL-addressable search. Headless Playwright is fingerprinted by Zap and KSP; do not use it for those.
+4. **Web search** `"<brand model>" site:<domain>`, escalating to Exa (`exa__web_search_exa`) when plain web search is thin. Tavily is no longer the escalation route (keyless tier, hourly cap).
 
-If all three fail for a retailer, record "no results / blocked" and continue — don't fail the whole run.
+If every route fails for a retailer, record "blocked: <routes tried>" and continue; don't fail the whole run.
 
 ### KSP regular-vs-Eilat price rule
 
@@ -134,7 +132,7 @@ For products that lean household/office/audio rather than pure consumer tech. Us
 | Office Depot | Office supplies + tech accessories |
 | Audioline | Audio equipment specialist |
 
-Same backend chain as the tier-1 group (Tavily → WebFetch → Playwright homepage form). Same Hebrew preflight. Same fallback chain. Out-of-category misses are normal (e.g. searching Audioline for a vacuum) and not worth flagging unless every retailer missed.
+Same backend chain as the tier-1 group (script → curl/WebFetch → real browser → web search). Same Hebrew preflight. Same fallback chain. Out-of-category misses are normal (e.g. searching Audioline for a vacuum) and not worth flagging unless every retailer missed.
 
 ---
 
@@ -144,14 +142,22 @@ Zap.co.il indexes prices across tier-1, tier-2, and many niche IL retailers. For
 
 ### Backend
 
-Playwright required — Zap has bot detection, Tavily snapshots are stale and miss the price table.
+`scripts/zap.py` — plain HTTPS GET with a desktop Chrome UA from an Israeli residential IP (verified 2026-11-20). Zap fingerprints headless browsers ("Request Rejected", since 2026-09) and blocks datacenter IPs, so Playwright and cloud fetchers fail; search-engine snapshots are stale and miss the vendor table.
+
+```
+python3 scripts/zap.py search "<hebrew query>"   # result cards: model pages (many vendors) + single listings
+python3 scripts/zap.py model <modelid|url>        # every vendor row: price, shipping, delivery days, rating, official importer, warranty
+```
+
+Each vendor row on a model page is a `div.compare-item-row` carrying `data-site-name`, `data-site-id`, `data-product-price`, `data-ship-price`, `data-delivery-time`, `data-official-importer`, `data-warranty-company`, `data-warranty-months`. The featured offer is `section.BuyBox` with the same fields.
 
 ### URL patterns
 
 - **Keyword search:** `https://www.zap.co.il/search.aspx?keyword=<encoded Hebrew query>`
 - **Model page (vendor comparison table):** `https://www.zap.co.il/model.aspx?modelid=<id>` — this is what you actually want; it has all vendors side-by-side. `modelid` is visible in the search results.
 - **Category browse:** `https://www.zap.co.il/models.aspx?sog=<category>` — fallback when keyword search is unhelpful.
-- **Store profile (for retailer ratings):** `https://www.zap.co.il/shop.aspx?sog=shop-<id>` — used by `/store-zap-lookup`.
+- **Store profile (for retailer ratings):** `https://www.zap.co.il/clientcard.aspx?siteid=<siteid>` — used by `/store-zap-lookup`. The siteid is in every offer row (`data-site-id`).
+- **Store directory (with category facets):** `https://www.zap.co.il/modelsstore.aspx?sog=g-stores` — the source of the Israel-Online-Stores roster.
 
 ### Workflow
 
@@ -186,7 +192,7 @@ Google often beats per-retailer search for discovery, for niche products, and as
 
 ### Backend
 
-Playwright MCP — Google Shopping blocks most scrapers; Tavily is unreliable here. Navigate `https://www.google.com/search` and submit the query.
+The built-in web search tool first (it honours `site:`), then Exa when results are thin. Google Shopping itself needs a real browser (it blocks scrapers); navigate `https://www.google.com/search` with the params below.
 
 Locale params:
 - `gl=il` — geolocation Israel (prices in ILS, IL retailers ranked first)
@@ -231,13 +237,40 @@ When the query lies outside the mainstream tier-1 and tier-2 chains — e.g. tac
 3. Pick up to 8 stores. Prioritise `is_tech: true` over `null`, then stores whose description mentions the specific product type, then stores with multiple matching categories.
 4. Resolve Hebrew terms.
 5. Search each store. Try in order:
-   - Playwright: homepage, locate search form (`input[type=search]`, `input[name=q]`, `input[name=s]`, `#search`, `#qSearch`), submit Hebrew query.
+   - Real browser: homepage, locate search form (`input[type=search]`, `input[name=q]`, `input[name=s]`, `#search`, `#qSearch`), submit Hebrew query.
    - URL-pattern probes: `/?s={q}` (WordPress), `/search?q={q}`, `/catalogsearch/result/?q={q}` (Magento).
-   - Tavily: `site:{domain} <hebrew query>`.
+   - Web search / Exa: `site:{domain} <hebrew query>`.
 6. Try alternate Hebrew variants if primary returns nothing.
 7. Rank low-to-high. Cap at 3 results per store.
 
 Only navigate to stores where `is_tech` is `true` or `null`. Never `false`.
+
+---
+
+## Trusted vendors (per category, in waves)
+
+`data/trusted-vendors.json` lists the vendors the user always wants searched for a category, with each vendor's verified search URL and route (`script` / `curl` / `browser`). Categories hold a `wave1` (always searched) and a `wave2` (searched when wave 1 is thin or breadth is wanted). Defaults shipped with the plugin, e.g.:
+
+| Category | Wave 1 | Wave 2 |
+|---|---|---|
+| `computer_parts` | KSP, Ivory, TMS | Plonter, Bug |
+| `consumer_tech` | KSP, Ivory, Bug | TMS, Plonter |
+| `microphones_audio` | KZPro, Speed of Sound, Halilit, Kley Zemer | KSP, Ivory |
+| `musical_instruments` | Halilit, Kley Zemer, KZPro | — |
+
+Users extend or override it in `<plugin-data-dir>/trusted-vendors.json` (same shape; a vendor with the same `id` replaces the default, a category with the same key replaces its waves). `find-product` reads both.
+
+---
+
+## Amazon delivered to Israel
+
+What the user pays to have it shipped home, without a US exit IP (verified 2026-10-21 on amazon.com, .co.uk, .de):
+
+1. GET `/portal-migration/hz/glow/get-rendered-address-selections` with the page's `anti-csrftoken-a2z` token.
+2. POST `/portal-migration/hz/glow/address-change` with `{"locationType":"COUNTRY","countryCode":"IL","district":"IL"}`.
+3. Product pages then show "AmazonGlobal Shipping / Estimated Import Charges / Total", or "cannot be shipped to Israel".
+
+Prices stay in USD; convert with `/convert-currency`. Import charges ran about 23% of item price on electronics. Where the `amazon` plugin is installed, its `amazon-listing-check` / `amazon-search` skills do this with a set delivery location.
 
 ---
 
@@ -273,7 +306,7 @@ An IL markup of 30–40% is often still cheaper than importing once shipping + V
 
 ---
 
-## Playwright usage notes
+## Browser usage notes (agent browser / Claude in Chrome / Playwright)
 
 - Always `browser_close` when done with a retailer to free the session.
 - Use `browser_snapshot` over `browser_evaluate` for extracting product cards — more robust to DOM changes.

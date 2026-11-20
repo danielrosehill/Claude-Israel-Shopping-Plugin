@@ -22,7 +22,7 @@ The two searches are run **independently** and reported separately. Do not colla
 
 ## How to query
 
-Use whichever web search tool is available (WebSearch, Tavily, etc.). Fire two distinct searches:
+Use the built-in web search tool (escalate to Exa when thin). Fire two distinct searches. For live Zap vendor prices rather than search snippets, also run `python3 scripts/zap.py search "<hebrew query>"`; for the full multi-channel search use the find-product skill.
 
 ### Search 1 — broad `.il` TLD
 

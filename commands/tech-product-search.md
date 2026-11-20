@@ -1,6 +1,6 @@
 ---
 name: tech-product-search
-description: Search the four tier-1 Israeli tech retailers — Ivory, KSP, Bug, TMS — for a consumer-tech product (laptop, phone, peripheral, accessory, charger, cable, monitor, TV, headphones, etc.) and return prices ranked low-to-high. Handles Hebrew-term resolution and falls back to Playwright when Tavily/WebFetch is blocked.
+description: Search the four tier-1 Israeli tech retailers — Ivory, KSP, Bug, TMS — for a consumer-tech product (laptop, phone, peripheral, accessory, charger, cable, monitor, TV, headphones, etc.) and return prices ranked low-to-high. Handles Hebrew-term resolution Uses the bundled KSP/Ivory scripts and curl, with a real browser only for bot-walled sites. For a full multi-channel search (Zap, trusted vendors, imports) use the find-product skill.
 ---
 
 # Tech Product Search — Ivory / KSP / Bug / TMS
@@ -18,7 +18,8 @@ Finds a consumer-tech product across the four tier-1 Israeli tech chains and ret
 ## Workflow
 
 1. **Resolve the Hebrew category noun** (see `docs/search-strategies.md` § Hebrew-term resolution). State it in the first user-facing line.
-2. **For each of the four retailers**, run the backend chain (Tavily → WebFetch → Playwright) in parallel where possible. Cap 5 results per retailer.
+2. **For each of the four retailers**, run the backend chain (script → curl/WebFetch → real browser → web search; see strategies doc) in parallel. KSP: `skills/ksp-branch-stock/scripts/ksp_stock.py "<q>" --all`. Ivory: `skills/ivory-branch-stock/scripts/ivory_stock.py "<q>" --all`. Cap 5 results per retailer.
+   For computer parts, also search wave 2 of `computer_parts` in `data/trusted-vendors.json` (Plonter) when these four are thin.
 3. **Retry** with a Hebrew synonym or brand+model only if a retailer returns zero.
 4. **KSP price rule:** quote the regular (non-Eilat) price unless the user asked about Eilat.
 5. **Rank low-to-high** by VAT-inclusive ILS price.
@@ -28,7 +29,7 @@ Finds a consumer-tech product across the four tier-1 Israeli tech chains and ret
 ```
 ## <product> — Israeli tech stores
 Hebrew query: <hebrew noun> <brand> <model>
-Backends used: Ivory=<tavily|playwright|…>, KSP=<…>, Bug=<…>, TMS=<…>
+Backends used: Ivory=<script|curl|browser|…>, KSP=<…>, Bug=<…>, TMS=<…>
 
 | # | ₪ (inc. VAT) | Product | Retailer | Link |
 |---|---|---|---|---|

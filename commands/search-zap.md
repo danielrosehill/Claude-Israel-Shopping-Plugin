@@ -13,7 +13,14 @@ Zap is the canonical Israeli price-comparison aggregator. One Zap search returns
 
 ## Backend
 
-Playwright MCP. Zap has bot detection; Tavily's indexed snapshots are often stale and miss the price table.
+`scripts/zap.py` (plain HTTP from an Israeli IP; Zap rejects headless browsers and datacenter IPs):
+
+```
+python3 scripts/zap.py search "<hebrew query>"
+python3 scripts/zap.py model <modelid>
+```
+
+The model output already includes every vendor's price, shipping, delivery days, rating, official-importer flag and warranty.
 
 ## Preflight — Hebrew term resolution
 
@@ -64,9 +71,9 @@ Less precise but useful when you don't know the exact product name.
    - Price (ILS, usually VAT-inclusive — verify)
    - Delivery info
    - Link through to the vendor listing
-6. **Check for Eilat / ex-VAT pricing.** Apply rules from `data/shopping-rules.md` — if a vendor shows an unusually low price, check for an ex-VAT or Eilat badge and use the higher regular price.
+6. **Check for Eilat / ex-VAT pricing.** Per `docs/search-strategies.md` § VAT — if a vendor shows an unusually low price, check for an ex-VAT or Eilat badge and use the higher regular price.
 7. **Rank low-to-high** by VAT-inclusive price.
-8. **Note vendors not in `data/israeli-stores.json`** — Zap often surfaces small specialists worth adding.
+8. **Note vendors not in the Israel-Online-Stores roster or `data/trusted-vendors.json`** — Zap often surfaces small specialists worth adding.
 
 ## Output
 
