@@ -60,7 +60,7 @@ If the search snippet contains the price, you can use it directly. Otherwise fet
 ## Israel-specific gotchas
 
 - **Parallel import (יבוא מקביל)**: common on AliExpress-adjacent items. Often cheaper than the official importer (יבואן רשמי) but warranty is shorter and not honoured by the brand's IL service centre. Surface this distinction if visible.
-- **VAT (מע"מ)**: prices on Israeli retail sites are normally VAT-inclusive (currently 18% as of 2026; verify if the comparison hinges on it). AliExpress prices to IL are pre-customs/VAT for orders ≥ $75 USD, so always compare *landed* cost, not sticker.
+- **VAT (מע"מ)**: prices on Israeli retail sites are normally VAT-inclusive (currently 18% as of 2026; verify if the comparison hinges on it). AliExpress prices to IL are pre-customs/VAT for orders ≥ $75 USD, so always compare *landed* cost, not sticker (use the `israel-import-tax` skill to compute it).
 - **Zap "starting from" prices**: the headline price on a Zap model page is the cheapest single vendor; click through to see whether that vendor is reputable (Zap shows a star rating). Don't treat the headline price as the realistic floor without verifying the vendor.
 - **Hebrew vs. English titles**: many Israeli retailers list the product in Hebrew but with the English model number embedded. Match on the model number, not the title text.
 

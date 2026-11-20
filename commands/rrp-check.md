@@ -42,7 +42,7 @@ Given an Israeli price for a product, decide whether it's a good deal versus the
    - 15–30% → ABOVE AVERAGE
    - 30–40% → MILD MARKUP
    - \>40% → HEAVY MARKUP — consider importing
-6. **Import realism.** Before recommending "import instead", factor landed cost:
+6. **Import realism.** Before recommending "import instead", factor landed cost (use the `israel-import-tax` skill for the actual figure; the bullets below are rough guides):
    - Amazon: shipping ($15–40 small items) + 18% VAT + possible customs duty (imports >$75 USD de minimis).
    - AliExpress: shipping cheap/free, 2–6 week lead time, same VAT/customs rules.
    - A 30–40% IL markup is often still cheaper than importing once all-in costs are counted.

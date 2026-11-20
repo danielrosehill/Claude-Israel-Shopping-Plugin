@@ -18,6 +18,10 @@ The `find-product` skill is the default entry point for "find me X" / "where can
 
 Every result row shows **where it ships from, how long delivery takes, the delivery options** (courier, pickup point, store pickup, Israel Post) and their cost. Prices default to **₪ including VAT**; ask for **dollars** and/or **excluding VAT** (business buyers who reclaim VAT) and the whole table switches basis, with the exchange rate and date stated. A standing default can go in `<plugin-data-dir>/preferences.json`, e.g. `{"currency": "USD", "vat": "ex", "buyer": "business"}`.
 
+## Skill: import tax
+
+- `israel-import-tax` — landed cost of a personal import: USD 75 exemption, VAT, duty and purchase tax by HS code, FTA origin proof, approvals, refunds, plus a stdlib `landed_cost.py`. Called from `find-product`, `compare-to-local` and `/rrp-check`; rules dated and pointed at the live Tax Authority calculator.
+
 ## Commands (slash)
 
 - `/tech-product-search` — search tier-1 IL tech retailers (Ivory, KSP, Bug, TMS) with Hebrew-term resolution; bundled KSP/Ivory scripts, curl, and a real browser only for bot-walled sites.

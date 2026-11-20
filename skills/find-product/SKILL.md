@@ -51,7 +51,7 @@ Report vendors the user trusts even when Zap already lists them: their own site 
 
 - **Amazon delivered to Israel:** use the `amazon` plugin (`amazon-listing-check` / `amazon-search`) with the delivery location set to Israel, or the curl recipe in `docs/search-strategies.md` § Amazon. Record item, AmazonGlobal shipping, estimated import charges, total, or "cannot be shipped to Israel".
 - **AliExpress:** prefer the `aliexpress-israel-skills` plugin (deep search with true SKU prices, landed cost, the $75 de-minimis). If it is not installed, search `he.aliexpress.com` in a real browser and compute landed cost by hand (item + shipping to IL; 18% VAT above $75). Only for unbranded items or when the user accepts AliExpress.
-- Compare against the Israeli best price with `/rrp-check` logic: VAT 18%, personal-import exemption $75.
+- Landed cost for either: run the `israel-import-tax` skill (USD 75 exemption, VAT, duty and purchase tax by HS code) rather than a rule of thumb, and compare against the Israeli best price with `/rrp-check` logic.
 
 ### E. Stock and pickup (when the user wants it today or names a place)
 
