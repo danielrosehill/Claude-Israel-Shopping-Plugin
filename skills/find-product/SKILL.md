@@ -14,7 +14,7 @@ Paths below are relative to the plugin root. Strategy detail (Hebrew terms, URL 
 1. Identify the exact item: brand, model, part number, variant (colour, capacity, region). If the user gave a vague description, a photo or a link, resolve it first (`/whats-this-brand`, `/pn-check`, or a quick web search) and state the resolved model in the first line.
 2. If several models fit and the choice changes the answer, list the top 2–3 and ask before fanning out.
 3. Build the Hebrew query: `<Hebrew category noun> <Latin brand> <Latin model>` (see strategies doc § Hebrew-term resolution). Keep a model-only variant (`<brand> <model>`) for retailers that choke on the noun.
-4. Classify into a category from `data/trusted-vendors.json` → `categories` (e.g. `computer_parts`, `consumer_tech`, `microphones_audio`, `musical_instruments`). If none fits, use the Israel-Online-Stores roster (step 1C) to find specialists by category.
+4. Classify into a category from `data/trusted-vendors.json` → `categories` (e.g. `computer_parts`, `consumer_tech`, `microphones_audio`, `microphones_headsets`, `musical_instruments`). If none fits, use the Israel-Online-Stores roster (step 1C) to find specialists by category.
 
 ## 1. Fan out (in parallel)
 

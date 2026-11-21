@@ -1,6 +1,6 @@
 {
   "_about": "Trusted Israeli vendors to search directly, per product category, in waves. Wave 1 is always searched for the category; wave 2 when wave 1 misses, is thin, or the user wants breadth. Search URL patterns use {q} for the URL-encoded query (Hebrew category noun + Latin brand/model). 'route' is the backend that was verified to work: curl = plain GET with a desktop Chrome UA from an Israeli IP; script = a bundled script; browser = real browser only (bot wall). Users add or override vendors in <plugin-data-dir>/trusted-vendors.json (same shape; entries with the same 'id' replace these). The full roster of ~800+ Israeli stores with Zap categories is the Israel-Online-Stores dataset (see docs/search-strategies.md).",
-  "verified": "2026-11-20",
+  "verified": "2026-11-21",
   "vendors": {
     "ksp": {
       "name": "KSP",
@@ -136,6 +136,55 @@
       "search_url": null,
       "route": "browser",
       "notes": "Official Nitecore: flashlights, chargers, batteries. Returned Cloudflare 525 (unverified 2026-11-20)."
+    },
+    "soundcheck": {
+      "name": "Sound Check (סאונד צ'ק)",
+      "domain": "sound-check.co.il",
+      "search_url": "https://www.sound-check.co.il/?s={q}&post_type=product",
+      "route": "curl",
+      "notes": "Rehovot (Shaul Tchernichovsky 88), online-first; pickup by prior arrangement only. Phones 08-330-1551 / 055-704-7570, WhatsApp on site. Huge catalogue (~33,000 SKUs): JSON-LD shows InStock on almost everything, i.e. 'available to order', not shelf stock: confirm by phone/WhatsApp. Often the cheapest for headsets (beyerdynamic, Audio-Technica). Shipping 49 ILS, free over 599. Reputation 2026-11-21: Google 4.1 (71), Zap 3/3 positive (2020-21), openinghours.co.il 3.0 (14)."
+    },
+    "headsound": {
+      "name": "HeadSound",
+      "domain": "headsound.co.il",
+      "search_url": "https://headsound.co.il/?s={q}&post_type=product",
+      "route": "curl",
+      "notes": "Headphones and headset specialist (WooCommerce). Stock from JSON-LD availability is reliable (shows OutOfStock). 24-month warranty on listings."
+    },
+    "shalmon": {
+      "name": "Shalmon Music (שלמון מוזיקה)",
+      "domain": "shalmonmusic.co.il",
+      "search_url": "https://shalmonmusic.co.il/?s={q}&post_type=product",
+      "route": "curl",
+      "notes": "Music and pro audio (WooCommerce), north (04-9887516). 'המלאי אזל' = out of stock."
+    },
+    "labama": {
+      "name": "La-Bama (לה-באמה)",
+      "domain": "la-bama.co.il",
+      "search_url": "https://la-bama.co.il/?s={q}&post_type=product",
+      "route": "curl",
+      "notes": "Pro audio and broadcast (WooCommerce). A single hit redirects straight to the product page. 'Up to 7 business days, subject to stock' is order-in, not shelf stock."
+    },
+    "nextpro": {
+      "name": "Next Pro",
+      "domain": "next-pro.co.il",
+      "search_url": "https://www.next-pro.co.il/?s={q}",
+      "route": "curl",
+      "notes": "Pro audio. Note the hyphen in the domain."
+    },
+    "kolhamusica": {
+      "name": "Kol HaMusica (קול המוסיקה)",
+      "domain": "kolhamusica.com",
+      "search_url": null,
+      "route": "web-fetch",
+      "notes": "Haifa, music and pro audio (04-8624424, WhatsApp 054-5841704). curl gets 403 (2026-11-21); Exa web fetch of product and category pages works. Add-to-cart shown without a stock statement: confirm stock by phone."
+    },
+    "diaz": {
+      "name": "Diaz (דיאז)",
+      "domain": null,
+      "search_url": null,
+      "route": "zap",
+      "notes": "Pro audio vendor seen on Zap (headsets, Audio-Technica). Own domain not found (diaz.co.il does not resolve, 2026-11-21): read its offers from Zap vendor tables."
     }
   },
   "categories": {
@@ -172,6 +221,9 @@
         "kleyzemer"
       ],
       "wave2": [
+        "soundcheck",
+        "headsound",
+        "labama",
         "ksp",
         "ivory",
         "audioline"
@@ -249,6 +301,26 @@
         "sollan"
       ],
       "wave2": [
+        "ksp"
+      ]
+    },
+    "microphones_headsets": {
+      "label": "Microphones and recording headsets (USB/broadcast headsets, head-worn mics, USB-C mic interfaces)",
+      "wave1": [
+        "speedofsound",
+        "soundcheck",
+        "headsound",
+        "kzpro"
+      ],
+      "wave2": [
+        "halilit",
+        "kleyzemer",
+        "labama",
+        "shalmon",
+        "kolhamusica",
+        "nextpro",
+        "diaz",
+        "bug",
         "ksp"
       ]
     }

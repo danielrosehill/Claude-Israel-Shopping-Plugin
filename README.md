@@ -11,7 +11,7 @@ Israeli shopping workflows for Claude Code — tech retailers, Zap price compari
 The `find-product` skill is the default entry point for "find me X" / "where can I buy X in Israel". It pins down the exact model, then runs every channel in parallel and returns one table ranked by delivered price:
 
 - **Zap** — `scripts/zap.py` pulls every vendor on a Zap model page (price, shipping, delivery days, rating, official importer, warranty) over plain HTTP.
-- **Trusted vendors per category** — [`data/trusted-vendors.json`](data/trusted-vendors.json), searched in waves. Defaults: computer parts → KSP, Ivory, TMS, then Plonter, Bug; microphones and audio → KZPro, Speed of Sound, Halilit, Kley Zemer, then KSP, Ivory. Each vendor carries its verified search URL and route. Add your own in `<plugin-data-dir>/trusted-vendors.json`.
+- **Trusted vendors per category** — [`data/trusted-vendors.json`](data/trusted-vendors.json), searched in waves. Defaults: computer parts → KSP, Ivory, TMS, then Plonter, Bug; microphones and audio → KZPro, Speed of Sound, Halilit, Kley Zemer, then Sound Check, HeadSound, La-Bama, KSP, Ivory; microphones and recording headsets → Speed of Sound, Sound Check, HeadSound, KZPro, then Halilit, Kley Zemer, La-Bama, Shalmon, Kol HaMusica, Next Pro, Diaz (via Zap), Bug, KSP. Each vendor carries its verified search URL and route. Add your own in `<plugin-data-dir>/trusted-vendors.json`.
 - **.co.il web search** for retailers neither Zap nor the trusted list covers.
 - **Import options** — Amazon delivered to Israel and AliExpress, with landed cost against the local best price.
 - **Branch stock** at KSP and Ivory when you want to pick it up.
