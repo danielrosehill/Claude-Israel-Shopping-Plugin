@@ -5,6 +5,8 @@ description: Given an Israeli retailer name (Hebrew or English), find its Zap.co
 
 # Store Zap Lookup
 
+> For a reputation verdict, use the `store-reputation` skill instead: it combines Zap with Google Maps. This command only finds the Zap profile.
+
 Resolve an Israeli retailer to its Zap seller profile and pull the rating.
 
 ## When to use
